@@ -1,3 +1,4 @@
+import React from 'react';
 import { Counter } from '../Counter';
 import { Search } from '../Search';
 import { TodoList } from '../List';
@@ -6,33 +7,27 @@ import { NewTask } from '../NewTask';
 import { TodosLoading } from '../TodosLoading';
 import { TodosError } from '../TodosError';
 import { EmptyTodos } from '../EmptyTodos';
+import { TaskContext } from '../TaskContext';
+import { Modal } from '../Modal';
+import { TodoForm } from '../TodoForm';
 
 
 
-
-
-function AppUi({
-    loading,
-    error,
-    completedTasks,
-    totalTasks,
-    searchValue,
-    setSearchValue,
-    searchedTask,
-    completeTask,
-    deleteTask
-
-}){
-    
+function AppUi(){
+    const {
+        loading,
+        error,
+        searchedTask,
+        completeTask,
+        deleteTask,
+        openModal,
+        setOpenModal,
+    } = React.useContext(TaskContext)
     return (
-        <>
-          <Counter 
-          completadas={completedTasks} 
-          total={totalTasks}/>
-          <Search 
-          searchValue ={searchValue} 
-          setSearchValue={setSearchValue} />
-          <TodoList>
+    <>
+        <Counter/>
+        <Search/>
+        <TodoList>
             {loading && (
                 <>
                     <TodosLoading/>
@@ -48,15 +43,23 @@ function AppUi({
                 key={task.text} 
                 text={task.text} 
                 completed={task.completed}
-                onComplete={ () => completeTask(task.text)}
+                 onComplete={ () => completeTask(task.text)}
                 onDelete= { () => deleteTask(task.text)}
                 />
             ))}
-          </TodoList>
+        </TodoList>
     
-          <NewTask />
-          </>
-      );
+        <NewTask 
+            setOpenModal={setOpenModal}
+            />
+
+        {openModal && (
+            <Modal>
+                <TodoForm/>
+            </Modal>
+        )}
+    </>
+    );
 }
 
 export {AppUi};

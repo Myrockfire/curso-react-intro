@@ -1,7 +1,13 @@
+import { TaskContext } from '../TaskContext';
 import './search.css';
 import React from 'react';
 
-function Search ({searchValue, setSearchValue}){
+function Search (){
+
+  const {
+    searchValue,
+    setSearchValue
+  } = React.useContext(TaskContext);
   
     return (
       <input 

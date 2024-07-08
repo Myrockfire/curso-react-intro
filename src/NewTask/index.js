@@ -1,10 +1,10 @@
 import './newTask.css';
 
 
-function NewTask () {
+function NewTask ({setOpenModal}) {
     return (
         <button type="button" className='newTask'
-        onClick={() => {console.log('le diste click')}
+        onClick={() => {setOpenModal(state => !state)}
         }>+</button>
     );
 }
